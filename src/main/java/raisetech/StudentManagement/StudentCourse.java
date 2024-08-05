@@ -9,7 +9,7 @@ public class StudentCourse {
 
   private String id;
   private String studentId;
-  private String courseName; // 追加: コース名
+  private String courseName;
   private String courseStartAt;
   private String courseEndAt;
 }
