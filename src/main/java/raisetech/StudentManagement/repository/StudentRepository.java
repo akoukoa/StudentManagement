@@ -14,14 +14,5 @@ public interface StudentRepository {
 
   @Select("SELECT * FROM students_courses")
   List<StudentCourses> searchStudentsCourses();
-
-  @Select("SELECT * FROM students WHERE age BETWEEN #{startAge} AND #{endAge}")
-  List<Student> findStudentsInAgeRange(int startAge, int endAge);
-
-  @Select("SELECT s.* " +
-      "FROM students s " +
-      "JOIN students_courses sc ON s.id = sc.student_id " +
-      "WHERE sc.course_name = #{courseName}")
-  List<Student> findStudentsByCourseName(String courseName);
 }
 

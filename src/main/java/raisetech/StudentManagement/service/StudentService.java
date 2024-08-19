@@ -25,12 +25,4 @@ public class StudentService {
   public List<StudentCourses> searchStudentsCourseList() {
     return repository.searchStudentsCourses();
   }
-
-  public List<Student> getStudentsIn30s() {
-    return repository.findStudentsInAgeRange(30, 39);
-  }
-
-  public List<Student> getStudentsByJavaCourse() {
-    return repository.findStudentsByCourseName("Javaコース");
-  }
 }
