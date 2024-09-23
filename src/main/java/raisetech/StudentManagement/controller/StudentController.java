@@ -41,9 +41,8 @@ public class StudentController {
    */
 
   @GetMapping("/studentList")
-  public List<StudentDetail> getStudentList() throws TestException {
-    throw new TestException(
-        "現在このAPIは利用できません。URLは「studentList」ではなく「students」を利用してください。");
+  public List<StudentDetail> getStudentList() {
+    return service.searchStudentList();
   }
 
   /**
