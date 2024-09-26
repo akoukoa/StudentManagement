@@ -1,6 +1,7 @@
 package raisetech.StudentManagement.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -52,6 +53,7 @@ public class StudentController {
    * @param id　受講生ID
    * @return 受講生
    */
+  @Operation(summary = "IDで受講生を検索", description = "指定したIDに基づいて受講生の詳細を取得します。")
   @GetMapping("/student/{id}")
   public StudentDetail getStudent(
       @PathVariable @NotBlank @Pattern(regexp = "^\\d+$") String id) {
@@ -78,6 +80,7 @@ public class StudentController {
    * @param studentDetail 受講生詳細
    * @return 実行結果
    */
+  @Operation(summary = "受講生の更新", description = "既存の受講生の詳細を更新します。")
   @PutMapping("/updateStudent")
   public ResponseEntity<String> updateStudent(@RequestBody StudentDetail studentDetail) {
     service.updateStudent(studentDetail);
