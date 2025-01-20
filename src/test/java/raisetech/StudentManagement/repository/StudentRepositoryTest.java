@@ -17,7 +17,7 @@ class StudentRepositoryTest {
   @Test
   void 受講生の全件検索が行えること(){
     List<Student> actual = sut.search();
-    assertThat(actual.size()).isEqualTo(3);
+    assertThat(actual.size()).isEqualTo(5);
   }
 
   @Test
