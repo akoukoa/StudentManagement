@@ -72,5 +72,25 @@ public interface StudentRepository {
    * @param studentCourse 受講生コース情報
    */
   void updateStudentCourse(StudentCourse studentCourse);
+
+  /**
+   * 受講生コース情報の申込状況を更新します。
+   *
+   * @param studentId 受講生ID
+   * @param courseName コース名
+   * @param status 申込状況
+   */
+  @Update("UPDATE students_courses SET application_status = #{status} WHERE student_id = #{studentId} AND course_name = #{courseName}")
+  void updateApplicationStatus(String studentId, String courseName, String status);
+
+  /**
+   * 申込状況を条件に受講生コース情報を検索します。
+   *
+   * @param studentId 受講生ID
+   * @param status 申込状況
+   * @return 受講生のコース情報
+   */
+  @Select("SELECT * FROM students_courses WHERE student_id = #{studentId} AND application_status = #{status}")
+  List<StudentCourse> searchStudentCoursesByStatus(String studentId, String status);
 }
 
