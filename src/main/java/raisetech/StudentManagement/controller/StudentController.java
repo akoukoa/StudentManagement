@@ -12,11 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import raisetech.StudentManagement.data.StudentCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.exception.TestException;
 import raisetech.StudentManagement.service.StudentService;
@@ -31,6 +34,7 @@ public class StudentController {
   private StudentService service;
 
   @Autowired
+  private StudentService studentService;
   public StudentController(StudentService service) {
     this.service = service;
   }
@@ -87,5 +91,20 @@ public class StudentController {
   @ExceptionHandler(TestException.class)
   public ResponseEntity<String> handleTestException(TestException ex) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+  }
+
+  @PatchMapping("/updateApplicationStatus")
+  public ResponseEntity<Void> updateApplicationStatus(@RequestParam String studentId,
+      @RequestParam String courseName,
+      @RequestParam String status) {
+    studentService.updateApplicationStatus(studentId, courseName, status);
+    return ResponseEntity.ok().build();
+  }
+
+  @GetMapping("/student/{studentId}/courses")
+  public ResponseEntity<List<StudentCourse>> getStudentCoursesByStatus(@PathVariable String studentId,
+      @RequestParam String status) {
+    List<StudentCourse> studentCourses = studentService.searchStudentCoursesByStatus(studentId, status);
+    return ResponseEntity.ok(studentCourses);
   }
 }

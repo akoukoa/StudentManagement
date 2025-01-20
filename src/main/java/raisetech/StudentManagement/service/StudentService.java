@@ -22,10 +22,12 @@ public class StudentService {
   private StudentConverter converter;
 
   @Autowired
+  private StudentRepository studentRepository;
   public StudentService(StudentRepository repository, StudentConverter converter) {
     this.repository = repository;
     this.converter = converter;
   }
+
 
   /**
    * 受験生詳細の一覧検索。全件検索を行うので、条件指定は行いません。
@@ -90,5 +92,13 @@ public class StudentService {
     repository.updateStudent(studentDetail.getStudent());
     studentDetail.getStudentCourseList()
         .forEach(studentCourse -> repository.updateStudentCourse(studentCourse));
+  }
+
+  public void updateApplicationStatus(String studentId, String courseName, String status) {
+    studentRepository.updateApplicationStatus(studentId, courseName, status);
+  }
+
+  public List<StudentCourse> searchStudentCoursesByStatus(String studentId, String status) {
+    return studentRepository.searchStudentCoursesByStatus(studentId, status);
   }
 }

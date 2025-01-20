@@ -24,4 +24,6 @@ public class StudentCourse {
 
   private LocalDateTime courseStartAt;
   private LocalDateTime courseEndAt;
+
+  private String applicationStatus;
 }

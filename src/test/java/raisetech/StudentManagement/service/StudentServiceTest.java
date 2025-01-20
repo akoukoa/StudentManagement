@@ -110,4 +110,25 @@ class StudentServiceTest {
     verify(repository, times(1)).updateStudent(student);
     verify(repository, times(1)).updateStudentCourse(studentCourse);
   }
+
+  @Test
+  void 受講生の申込状況が更新できること() {
+    String studentId = "999";
+    String courseName = "Javaコース";
+    String status = "本申込"; // 新しい申込状況
+
+    sut.updateApplicationStatus(studentId, courseName, status);
+
+    verify(repository, times(1)).updateApplicationStatus(studentId, courseName, status);
+  }
+
+  @Test
+  void 申込状況で受講生コース情報を検索できること() {
+    String studentId = "999";
+    String status = "本申込"; // 検索する申込状況
+
+    List<StudentCourse> result = sut.searchStudentCoursesByStatus(studentId, status);
+
+    verify(repository, times(1)).searchStudentCoursesByStatus(studentId, status);
+  }
 }

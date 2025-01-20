@@ -116,4 +116,60 @@ class StudentControllerTest {
     assertThat(violations).extracting("message")
         .containsOnly("数字のみ入力するようにしてください。");
   }
+
+  @Test
+  void 受講生詳細の申込状況更新が実行できること() throws Exception {
+    String studentId = "999";
+    String courseId = "1001";
+    String newStatus = "本申込"; // 新しい申込状況
+
+    mockMvc.perform(MockMvcRequestBuilders.patch("/updateApplicationStatus")
+            .param("studentId", studentId)
+            .param("courseId", courseId)
+            .param("status", newStatus)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk());
+
+    verify(service, times(1)).updateApplicationStatus(studentId, courseId, newStatus);
+  }
+
+  @Test
+  void 受講生詳細の申込状況による受講生コース情報検索が実行できること() throws Exception {
+    String studentId = "999";
+    String status = "本申込"; // 検索対象の申込状況
+
+    mockMvc.perform(MockMvcRequestBuilders.get("/student/{studentId}/courses", studentId)
+            .param("status", status))
+        .andExpect(status().isOk());
+
+    verify(service, times(1)).searchStudentCoursesByStatus(studentId, status);
+  }
+
+  @Test
+  void 申込状況が更新できること() throws Exception {
+    String studentId = "999";
+    String courseName = "Javaコース";
+    String status = "本申込";
+
+    mockMvc.perform(MockMvcRequestBuilders.patch("/updateApplicationStatus")
+            .param("studentId", studentId)
+            .param("courseName", courseName)
+            .param("status", status)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk());
+
+    verify(service, times(1)).updateApplicationStatus(studentId, courseName, status);
+  }
+
+  @Test
+  void 申込状況で受講生コース情報が検索できること() throws Exception {
+    String studentId = "999";
+    String status = "本申込";
+
+    mockMvc.perform(MockMvcRequestBuilders.get("/student/{studentId}/courses", studentId)
+            .param("status", status))
+        .andExpect(status().isOk());
+
+    verify(service, times(1)).searchStudentCoursesByStatus(studentId, status);
+  }
 }
