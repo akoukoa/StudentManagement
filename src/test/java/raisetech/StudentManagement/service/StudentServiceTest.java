@@ -51,7 +51,7 @@ class StudentServiceTest {
 
     verify(repository, times(1)).search();
     verify(repository, times(1)).searchStudentCourseList();
-    verify(converter, times(1)).convertStudentDetails(test, studentCourseList);
+    verify(converter, times(1)).convertStudentDetails(studentList, studentCourseList);
   }
 
   @Test

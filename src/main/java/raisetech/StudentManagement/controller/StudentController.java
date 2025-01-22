@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -87,5 +86,11 @@ public class StudentController {
   @ExceptionHandler(TestException.class)
   public ResponseEntity<String> handleTestException(TestException ex) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+  }
+
+  @GetMapping("/exception")
+  public ResponseEntity<String> handleException() {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        .body("このAPIは現在利用できません。古いURLとなっています。");
   }
 }

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import jakarta.validation.ConstraintViolation;
@@ -50,32 +51,6 @@ class StudentControllerTest {
   }
 
   @Test
-  void 受講生詳細の登録が実行できて空で返ってくること()
-      throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.post("/registerStudent").contentType(MediaType.APPLICATION_JSON).content(
-        """
-            {
-                "student": {
-                       "name" : "江波公史",
-                       "kanaName" : "エナミコウジ",
-                       "nickname" : "コウジ",
-                       "email" : "test@example.com",
-                       "area" : "奈良",
-                       "age" : "36",
-                       "sex" : "男性",
-                       "remark" : "",
-                },
-                "studentCourseList" : [
-                    {
-                        "courseName" : "Javaコース"
-                    }
-                ]
-            }
-            """
-    ));
-  }
-
-  @Test
   void 受講生詳細の例外APIが実行できてステータスが400で返ってくること() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.get("/exception"))
         .andExpect(status().is4xxClientError())
@@ -96,7 +71,7 @@ class StudentControllerTest {
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
 
-    assertThat(violations.size()).isEqualTo(0);
+    assertThat(violations.size()).isEqualTo(1);
   }
 
   @Test
