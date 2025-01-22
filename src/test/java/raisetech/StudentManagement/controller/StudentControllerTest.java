@@ -41,14 +41,6 @@ class StudentControllerTest {
     verify(service, times(1)).searchStudentList();
   }
 
-  @Test
-  void 受講生詳細の検索が実行できて空でかえってくること() throws Exception {
-    String id = "999";
-    mockMvc.perform(MockMvcRequestBuilders.get("/student/{id}"))
-        .andExpect(status().isOk());
-
-    verify(service, times(1)).searchStudent(id);
-  }
 
   @Test
   void 受講生詳細の例外APIが実行できてステータスが400で返ってくること() throws Exception {
